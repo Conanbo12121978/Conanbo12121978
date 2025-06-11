@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>บัญชียาโรงพยาบาล</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fb;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1b6ca8;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #e8f0f9;
+    }
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th {
+        display: none;
+      }
+      td {
+        position: relative;
+        padding-left: 50%;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        font-weight: bold;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>บัญชียาโรงพยาบาล</h1>
+  <p>ระบบค้นหาและแสดงข้อมูลยาที่ให้บริการในโรงพยาบาล</p>
+</header>
+
+<div class="container">
+  <input type="text" id="searchInput" onkeyup="searchDrugs()" placeholder="🔍 พิมพ์ชื่อยาที่ต้องการค้นหา...">
+
+  <table id="drugTable">
+    <thead>
+      <tr>
+        <th>ชื่อยา</th>
+        <th>ชื่อสามัญ</th>
+        <th>ขนาด/รูปแบบ</th>
+        <th>หมวดหมู่</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="ชื่อยา">Paracetamol</td>
+        <td data-label="ชื่อสามัญ">Paracetamol</td>
+        <td data-label="ขนาด/รูปแบบ">500 mg tablet</td>
+        <td data-label="หมวดหมู่">บัญชียาหลักแห่งชาติ</td>
+      </tr>
+      <tr>
+        <td data-label="ชื่อยา">Amoxicillin</td>
+        <td data-label="ชื่อสามัญ">Amoxicillin</td>
+        <td data-label="ขนาด/รูปแบบ">250 mg capsule</td>
+        <td data-label="หมวดหมู่">ยาปฏิชีวนะ</td>
+      </tr>
+      <tr>
+        <td data-label="ชื่อยา">Metformin</td>
+        <td data-label="ชื่อสามัญ">Metformin</td>
+        <td data-label="ขนาด/รูปแบบ">850 mg tablet</td>
+        <td data-label="หมวดหมู่">เบาหวาน</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function searchDrugs() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById("drugTable");
+    const tr = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < tr.length; i++) {
+      const tds = tr[i].getElementsByTagName("td");
+      let show = false;
+      for (let j = 0; j < tds.length; j++) {
+        if (tds[j].innerText.toLowerCase().indexOf(filter) > -1) {
+          show = true;
+          break;
+        }
+      }
+      tr[i].style.display = show ? "" : "none";
+    }
+  }
+</script>
+
+</body>
+</html>
